@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Timothy's Tiny Jungle — a friendly guide to setting up and looking after a bioactive terrarium.">
+  <title>Timothy's Tiny Jungle — Terrarium Guide</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #16301f;
+      --ink-soft: #2c4a36;
+      --paper: #f6fbf3;
+      --card: #ffffff;
+      --leaf: #2f8f4a;
+      --leaf-dark: #1f6b35;
+      --leaf-light: #e5f6e4;
+      --moss: #7cbc62;
+      --sky: #2f8fb8;
+      --sky-light: #dff3fb;
+      --sun: #efb422;
+      --sun-light: #fff3cc;
+      --clay: #d76a32;
+      --clay-light: #ffe4d4;
+      --grape: #6b5cbc;
+      --grape-light: #ece7ff;
+      --rose: #c4456a;
+      --rose-light: #ffe0ea;
+      --soil: #7a4a28;
+      --line: #d5e6d2;
+      --shadow: 0 12px 30px rgba(22, 48, 31, 0.08);
+      --radius: 24px;
+      --max: 1080px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Nunito", "Trebuchet MS", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, #fff7d6 0 18%, transparent 19%),
+        radial-gradient(circle at 90% 12%, #d9f4ff 0 16%, transparent 17%),
+        radial-gradient(circle at 80% 80%, #e8f8d9 0 20%, transparent 21%),
+        var(--paper);
+      line-height: 1.55;
+      font-size: 1.05rem;
+    }
+    img, svg { max-width: 100%; display: block; }
+    a { color: var(--leaf-dark); }
+    h1, h2, h3, .logo-type {
+      font-family: "Fredoka", "Nunito", sans-serif;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+      margin: 0 0 0.5em;
+    }
+    p { margin: 0 0 0.85em; }
+    :focus-visible {
+      outline: 3px solid var(--sun);
+      outline-offset: 3px;
+    }
+
+    .skip {
+      position: absolute;
+      left: 12px;
+      top: -40px;
+      background: var(--ink);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 10px;
+      z-index: 200;
+    }
+    .skip:focus { top: 12px; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(246, 251, 243, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--line);
+    }
+    .topbar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .logo svg { width: 42px; height: 42px; }
+    .nav-toggle {
+      margin-left: auto;
+      display: none;
+      border: 2px solid var(--leaf);
+      background: #fff;
+      color: var(--leaf-dark);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-left: auto;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--ink-soft);
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 7px 11px;
+      border-radius: 999px;
+    }
+    nav a:hover, nav a:focus-visible { background: var(--leaf-light); color: var(--leaf-dark); }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 18px 80px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+      padding: 42px 0 20px;
+    }
+    .eyebrow {
+      display: inline-block;
+      background: var(--sun-light);
+      color: #7a4d00;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); color: var(--leaf-dark); }
+    .lead { font-size: 1.2rem; color: var(--ink-soft); max-width: 38ch; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 12px 20px;
+    }
+    .btn-primary { background: var(--leaf); color: #fff; box-shadow: 0 6px 0 var(--leaf-dark); }
+    .btn-primary:hover { transform: translateY(1px); box-shadow: 0 5px 0 var(--leaf-dark); }
+    .btn-ghost { background: #fff; color: var(--leaf-dark); border: 2px solid var(--leaf); }
+    .hero-art {
+      background: linear-gradient(180deg, #cdebff 0 58%, #b9e08a 58% 100%);
+      border-radius: 36px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-art svg { width: 100%; height: auto; }
+
+    [hidden] { display: none !important; }
+    section, #top {
+      scroll-margin-top: 110px;
+    }
+    section {
+      margin: 28px 0;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 28px 26px;
+      box-shadow: var(--shadow);
+      border: 2px solid #eef6ec;
+    }
+    section h2 {
+      font-size: clamp(1.6rem, 3vw, 2.15rem);
+      color: var(--leaf-dark);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge-num {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--leaf-light);
+      color: var(--leaf-dark);
+      font-family: "Fredoka", sans-serif;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .card {
+      background: var(--leaf-light);
+      border-radius: 20px;
+      padding: 16px 16px 14px;
+      border: 2px solid #d7efd4;
+    }
+    .card h3 { font-size: 1.15rem; color: var(--ink); }
+    .card.sky { background: var(--sky-light); border-color: #c5e8f5; }
+    .card.sun { background: var(--sun-light); border-color: #f6e3a0; }
+    .card.clay { background: var(--clay-light); border-color: #f5c9ad; }
+    .card.grape { background: var(--grape-light); border-color: #d8d0f8; }
+    .card.rose { background: var(--rose-light); border-color: #f7c2d1; }
+    .card.plain { background: #fff; border-color: var(--line); }
+    .tiny { font-size: 0.92rem; color: var(--ink-soft); }
+    .tip, .warn, .ok {
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin: 14px 0 0;
+      font-weight: 700;
+    }
+    .tip { background: var(--sun-light); color: #5c3d00; }
+    .warn { background: var(--rose-light); color: #6d2240; }
+    .ok { background: var(--leaf-light); color: var(--leaf-dark); }
+
+    .layers {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+    .jar-stack {
+      width: 100%;
+      max-width: 220px;
+      border: 8px solid #b9d4e8;
+      border-top: 16px solid #8fb5ce;
+      border-radius: 16px 16px 40px 40px;
+      overflow: hidden;
+      background: #f3fbff;
+      box-shadow: inset 10px 0 0 rgba(255,255,255,0.45);
+      position: sticky;
+      top: 96px;
+    }
+    .jar-layer {
+      padding: 10px 8px;
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.25);
+    }
+    .l-moss { background: #4e9a46; }
+    .l-leaf { background: #6b8f32; }
+    .l-soil { background: #7a4a28; }
+    .l-mesh { background: #5f5f5f; letter-spacing: 0.08em; }
+    .l-drain { background: #9a5720; }
+    .layer-list { display: grid; gap: 10px; }
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 12px;
+      align-items: start;
+      background: #fff;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .step b.n {
+      width: 48px; height: 48px;
+      border-radius: 16px;
+      background: var(--leaf);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Fredoka", sans-serif;
+      font-size: 1.2rem;
+    }
+
+    .plant-grid, .critter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .plant {
+      background: #fff;
+      border: 2px solid var(--line);
+      border-radius: 20px;
+      padding: 14px;
+      text-align: center;
+    }
+    .plant svg, .critter-face svg { width: 88px; height: 88px; margin: 0 auto 8px; }
+    .plant h3, .critter-card h3 { font-size: 1.05rem; }
+
+    .critter-card {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      perspective: 900px;
+      min-height: 250px;
+      cursor: pointer;
+    }
+    .critter-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+    }
+    .critter-card.is-flipped .critter-inner,
+    .critter-card:focus-within .critter-inner { transform: rotateY(180deg); }
+    .critter-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 20px;
+      padding: 16px;
+      border: 2px solid var(--line);
+      background: #fff;
+    }
+    .critter-back { transform: rotateY(180deg); background: var(--grape-light); border-color: #d8d0f8; text-align: left; }
+    .flip-hint { font-size: 0.8rem; font-weight: 800; color: var(--grape); margin: 8px 0 0; }
+
+    .check-list { display: grid; gap: 10px; }
+    .check-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: start;
+      background: var(--leaf-light);
+      border-radius: 16px;
+      padding: 12px 14px;
+      border: 2px solid #d7efd4;
+    }
+    .check-item input {
+      width: 24px; height: 24px;
+      accent-color: var(--leaf);
+      margin-top: 2px;
+    }
+    .check-item.done { background: #fff; opacity: 0.85; }
+    .check-item.done span { text-decoration: line-through; }
+    .check-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; align-items: center; }
+    .progress {
+      height: 14px;
+      background: #e3f0df;
+      border-radius: 999px;
+      overflow: hidden;
+      flex: 1;
+      min-width: 140px;
+    }
+    .progress > span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--moss), var(--leaf));
+      transition: width 0.3s ease;
+    }
+
+    .quiz-card {
+      background: var(--sky-light);
+      border-radius: 20px;
+      padding: 18px;
+      border: 2px solid #c5e8f5;
+    }
+    .choices { display: grid; gap: 10px; margin-top: 12px; }
+    .choices button {
+      text-align: left;
+      font: inherit;
+      font-weight: 700;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 2px solid #9fd3e8;
+      background: #fff;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .choices button:hover:not(:disabled) { border-color: var(--sky); }
+    .choices button.correct { background: #d9f5d0; border-color: var(--leaf); }
+    .choices button.wrong { background: #ffd6e1; border-color: var(--rose); }
+    .choices button:disabled { cursor: default; }
+    .quiz-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .badges { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 18px; }
+    .award {
+      text-align: center;
+      background: #fff;
+      border: 2px dashed var(--line);
+      border-radius: 18px;
+      padding: 12px 8px;
+      opacity: 0.45;
+      filter: grayscale(1);
+    }
+    .award.earned { opacity: 1; filter: none; border-style: solid; border-color: var(--sun); background: var(--sun-light); }
+    .award .icon { font-size: 1.8rem; }
+    .award strong { display: block; font-size: 0.85rem; margin-top: 4px; }
+
+    footer {
+      text-align: center;
+      padding: 24px 18px 40px;
+      color: var(--ink-soft);
+    }
+
+    @media (max-width: 860px) {
+      .hero, .layers, .grid-2, .grid-3, .plant-grid, .critter-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .badges { grid-template-columns: repeat(3, 1fr); }
+      nav {
+        display: none;
+        flex-direction: column;
+        flex-basis: 100%;
+        width: 100%;
+        margin: 0;
+        gap: 2px;
+        padding: 6px 0 8px;
+      }
+      .topbar.open nav { display: flex; }
+      nav a { padding: 10px 12px; }
+      .nav-toggle { display: inline-flex; }
+      .topbar-inner { flex-wrap: wrap; align-items: center; }
+      .jar-stack { position: static; }
+    }
+    @media (max-width: 600px) {
+      .hero, .layers, .grid-2, .grid-3, .plant-grid, .critter-grid {
+        grid-template-columns: 1fr;
+      }
+      .badges { grid-template-columns: 1fr 1fr; }
+      .hero { padding-top: 22px; }
+      section { padding: 22px 16px; }
+      .jar-stack { margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <a class="logo" href="#top">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <rect x="8" y="14" width="48" height="44" rx="16" fill="#d8f0ff" stroke="#2f8f4a" stroke-width="3"/>
+          <rect x="20" y="8" width="24" height="10" rx="3" fill="#2f8f4a"/>
+          <ellipse cx="32" cy="40" rx="16" ry="6" fill="#7a4a28"/>
+          <circle cx="24" cy="32" r="6" fill="#2f8f4a"/>
+          <circle cx="38" cy="30" r="7" fill="#4e9a46"/>
+          <circle cx="32" cy="36" r="5" fill="#7cbc62"/>
+        </svg>
+        <span class="logo-type">Timothy's Tiny Jungle</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" id="navToggle">Menu</button>
+      <nav id="site-nav">
+        <a href="#what">Start</a>
+        <a href="#container">Jar</a>
+        <a href="#layers">Layers</a>
+        <a href="#plants">Plants</a>
+        <a href="#critters">Critters</a>
+        <a href="#care">Care</a>
+        <a href="#problems">Fixes</a>
+        <a href="#checklist">Checklist</a>
+        <a href="#quiz">Quiz</a>
+        <a href="#safety">Safety</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" id="main">
+    <div class="hero" id="top">
+      <div>
+        <span class="eyebrow">A guide for Timothy, age 11</span>
+        <h1>Build a tiny world in a jar.</h1>
+        <p class="lead">This site shows you how to make a living terrarium — plants, soil, and helpful little creatures working together like a mini forest.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#what">Let's begin</a>
+          <a class="btn btn-ghost" href="#checklist">Weekly checklist</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 360 340" role="img">
+          <rect x="0" y="210" width="360" height="130" fill="#8fbf55"/>
+          <ellipse cx="70" cy="230" rx="40" ry="14" fill="#6ea046"/>
+          <ellipse cx="300" cy="236" rx="50" ry="16" fill="#6ea046"/>
+          <rect x="118" y="36" width="124" height="22" rx="6" fill="#2f6f3a"/>
+          <path d="M100 58h160c8 0 16 8 16 16v196c0 28-24 50-54 50H138c-30 0-54-22-54-50V74c0-8 8-16 16-16z" fill="#eaf7ff" stroke="#3e7a4a" stroke-width="6"/>
+          <path d="M92 210c20-38 176-38 196 0v60c0 24-20 42-46 42H138c-26 0-46-18-46-42v-60z" fill="#7a4a28"/>
+          <path d="M92 200c18-10 50-16 98-16s80 6 98 16c-18 12-52 20-98 20s-80-8-98-20z" fill="#5e8f35"/>
+          <circle cx="150" cy="168" r="28" fill="#2f8f4a"/>
+          <circle cx="188" cy="150" r="22" fill="#4e9a46"/>
+          <circle cx="214" cy="172" r="20" fill="#7cbc62"/>
+          <rect x="196" y="168" width="10" height="40" fill="#7a4a28"/>
+          <ellipse cx="150" cy="248" rx="14" ry="8" fill="#c9a36b"/>
+          <circle cx="200" cy="252" r="7" fill="#d8d0c0"/>
+          <circle cx="230" cy="246" r="5" fill="#bfa57a"/>
+          <circle cx="168" cy="86" r="4" fill="#9fd3e8" opacity="0.8"/>
+          <circle cx="200" cy="100" r="3" fill="#9fd3e8" opacity="0.8"/>
+          <circle cx="230" cy="80" r="5" fill="#9fd3e8" opacity="0.7"/>
+        </svg>
+      </div>
+    </div>
+
+    <section id="what">
+      <h2><span class="badge-num">1</span> What is a terrarium?</h2>
+      <p>A terrarium is a little garden in a glass container. The plants, soil, water and tiny animals make a <strong>mini ecosystem</strong>. That means they help each other, a bit like a woodland floor in real life.</p>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Closed terrarium</h3>
+          <p>This one has a lid. Water rises, turns into tiny droplets on the glass, then rains back down. It is great for moss, ferns and rainforest plants.</p>
+        </article>
+        <article class="card sky">
+          <h3>Open terrarium</h3>
+          <p>This one has no lid, or the lid stays off. Air moves more freely and it stays drier. Good for plants that dislike soggy soil.</p>
+        </article>
+        <article class="card sun">
+          <h3>Bioactive terrarium</h3>
+          <p>This is a living team. Plants grow, and a <strong>clean-up crew</strong> of woodlice and springtails eats leftover bits so mould does not take over.</p>
+        </article>
+      </div>
+      <p class="ok">This guide is about a bioactive tropical terrarium — the fun, living kind. You and a grown-up can build it together.</p>
+    </section>
+
+    <section id="container">
+      <h2><span class="badge-num">2</span> Choosing a container</h2>
+      <p>Clear glass is best, because light needs to reach the plants. Bigger jars are easier than tiny ones. Creatures and roots like a bit of space.</p>
+      <div class="grid grid-2">
+        <article class="card plain">
+          <h3>Good choices</h3>
+          <ul>
+            <li>A large glass jar with a lid</li>
+            <li>A small aquarium or sweet jar</li>
+            <li>A vase you can still reach into</li>
+            <li>Smooth sides, so you can watch the world inside</li>
+          </ul>
+        </article>
+        <article class="card clay">
+          <h3>Things to check</h3>
+          <ul>
+            <li>Wash it with warm water and dry it well</li>
+            <li>Look for cracks — glass can break</li>
+            <li>A lid is handy for a closed, humid home</li>
+            <li>Ask a grown-up before you move a heavy jar</li>
+          </ul>
+        </article>
+      </div>
+      <p class="tip">Start with a container at least as wide as a dinner plate if you can. A wide jar is much easier to plant and to look after.</p>
+    </section>
+
+    <section id="layers">
+      <h2><span class="badge-num">3</span> Layers, step by step</h2>
+      <p>Think of the jar like a tiny hillside. Each layer has a job. Build from the bottom up, and do not rush.</p>
+      <div class="layers">
+        <div class="jar-stack" aria-hidden="true">
+          <div class="jar-layer l-moss">Moss &amp; wood</div>
+          <div class="jar-layer l-leaf">Leaf litter</div>
+          <div class="jar-layer l-soil">Soil mix</div>
+          <div class="jar-layer l-mesh">Mesh barrier</div>
+          <div class="jar-layer l-drain">Drainage</div>
+        </div>
+        <div class="layer-list">
+          <div class="step"><b class="n">1</b><div><h3>Drainage</h3><p>Add 3 to 5 cm of clay balls (LECA) or clean gravel. This pocket at the bottom holds spare water so roots do not sit in a puddle.</p></div></div>
+          <div class="step"><b class="n">2</b><div><h3>Mesh barrier</h3><p>Lay a piece of mesh, pond netting or landscape fabric over the stones. A thin layer of sphagnum moss also works. This stops the soil tumbling down into the drainage.</p></div></div>
+          <div class="step"><b class="n">3</b><div><h3>Substrate / soil mix</h3><p>Add a fluffy tropical mix: coco coir, a little house-plant compost, orchid bark and some sphagnum moss. A pinch of horticultural charcoal helps keep the soil fresh. Aim for 6 to 10 cm of soil if the jar is big enough.</p></div></div>
+          <div class="step"><b class="n">4</b><div><h3>Leaf litter</h3><p>Scatter dry, clean leaves on top — oak or beech leaves are excellent. This is food and cover for your clean-up crew.</p></div></div>
+          <div class="step"><b class="n">5</b><div><h3>Moss, wood and hides</h3><p>Press sheets of moss onto the soil. Add a piece of cork bark, a safe stick, or a small bit of rotting hardwood. Critters love dim hidey-holes.</p></div></div>
+        </div>
+      </div>
+      <p class="tip">Do not use soil dug straight from the garden. It can hold slugs, mystery insects or plant food that is too strong for a jar.</p>
+    </section>
+
+    <section id="plants">
+      <h2><span class="badge-num">4</span> Plants that work well</h2>
+      <p>Pick small plants that enjoy damp air and bright shade. Leave space between them so they can grow. Trim a stem if it gets too long — that is normal and kind, not mean.</p>
+      <div class="plant-grid">
+        <article class="plant">
+          <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#e5f6e4"/><path d="M44 70c0-28 16-40 16-40s2 22-16 40c-18-18-16-40-16-40s16 12 16 40z" fill="#2f8f4a"/><circle cx="36" cy="38" r="6" fill="#f3f3e4"/><circle cx="54" cy="42" r="5" fill="#f3f3e4"/></svg>
+          <h3>Fittonia</h3>
+          <p class="tiny">Nerve plant. Pretty veined leaves. Loves humidity and will droop if it is too dry — a drink usually perks it up.</p>
+        </article>
+        <article class="plant">
+          <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#e5f6e4"/><path d="M44 72V28M44 50c-16-10-22-24-22-24M44 44c16-8 24-20 24-20M44 60c-18-6-26-16-26-16M44 58c18-6 26-16 26-16" stroke="#2f8f4a" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+          <h3>Ferns</h3>
+          <p class="tiny">Lemon button fern and other small ferns love a closed jar. Maidenhair ferns are prettier, but a bit fussier.</p>
+        </article>
+        <article class="plant">
+          <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#e5f6e4"/><circle cx="32" cy="48" r="10" fill="#4e9a46"/><circle cx="46" cy="40" r="12" fill="#2f8f4a"/><circle cx="58" cy="50" r="9" fill="#7cbc62"/></svg>
+          <h3>Moss</h3>
+          <p class="tiny">Cushion moss and sheet moss make a soft green carpet. Keep them gently moist, never bone dry.</p>
+        </article>
+        <article class="plant">
+          <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#e5f6e4"/><ellipse cx="30" cy="40" rx="12" ry="18" fill="#2f8f4a"/><ellipse cx="50" cy="34" rx="13" ry="16" fill="#4e9a46"/><rect x="42" y="48" width="6" height="22" fill="#7a4a28"/></svg>
+          <h3>Pothos</h3>
+          <p class="tiny">A tough trailing plant. It grows quickly, so snip it back when it starts to take over the jar.</p>
+        </article>
+        <article class="plant">
+          <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#e5f6e4"/><ellipse cx="44" cy="42" rx="18" ry="12" fill="#2f8f4a"/><ellipse cx="32" cy="50" rx="10" ry="8" fill="#4e9a46"/><ellipse cx="56" cy="50" rx="10" ry="8" fill="#4e9a46"/></svg>
+          <h3>Peperomia</h3>
+          <p class="tiny">Thick, cheerful leaves and a compact shape. A brilliant beginner plant for a humid jar.</p>
+        </article>
+        <article class="plant">
+          <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#e5f6e4"/><path d="M44 70L28 36h32z" fill="#2f8f4a"/><path d="M44 60L34 40h20z" fill="#7cbc62"/></svg>
+          <h3>Also lovely</h3>
+          <p class="tiny">Small pilea, syngonium (arrowhead vine) and mini philodendron all settle in well. Skip succulents — they dislike a steamy closed jar.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="critters">
+      <h2><span class="badge-num">5</span> Creatures and the clean-up crew</h2>
+      <p>These animals are not just pets. They are workers. They eat decaying leaves and leftover food, which helps stop mould. Tap a card to flip it and read more.</p>
+      <div class="critter-grid">
+        <button class="critter-card" type="button" aria-label="Isopod card, flip for details">
+          <div class="critter-inner">
+            <div class="critter-face">
+              <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#ece7ff"/><ellipse cx="44" cy="48" rx="24" ry="14" fill="#8b6a4a"/><circle cx="30" cy="46" r="4" fill="#5a4030"/><circle cx="58" cy="46" r="4" fill="#5a4030"/><path d="M22 50h44" stroke="#5a4030" stroke-width="2"/></svg>
+              <h3>Isopods</h3>
+              <p class="tiny">Also called woodlice. The stars of the clean-up crew.</p>
+              <p class="flip-hint">Tap to flip</p>
+            </div>
+            <div class="critter-face critter-back">
+              <h3>Isopods</h3>
+              <p class="tiny">Start with about 8 to 15 in a medium jar. Powder blue, powder orange or dairy cow types are popular. They eat leaf litter and need a bit of calcium, such as a small piece of cuttlebone. They hide in the day and wander more at night.</p>
+            </div>
+          </div>
+        </button>
+        <button class="critter-card" type="button" aria-label="Springtail card, flip for details">
+          <div class="critter-inner">
+            <div class="critter-face">
+              <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#dff3fb"/><circle cx="36" cy="46" r="5" fill="#16301f"/><circle cx="50" cy="42" r="4" fill="#16301f"/><circle cx="60" cy="50" r="3" fill="#16301f"/></svg>
+              <h3>Springtails</h3>
+              <p class="tiny">Tiny white jumpers that hoover up mould.</p>
+              <p class="flip-hint">Tap to flip</p>
+            </div>
+            <div class="critter-face critter-back">
+              <h3>Springtails</h3>
+              <p class="tiny">Add a small starter culture. They breed if the jar stays moist. You may only spot them as moving white specks. They team perfectly with isopods and should be in every bioactive terrarium.</p>
+            </div>
+          </div>
+        </button>
+        <button class="critter-card" type="button" aria-label="Millipede card, flip for details">
+          <div class="critter-inner">
+            <div class="critter-face">
+              <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#ffe4d4"/><path d="M18 50c20-18 52-18 52 6" stroke="#5a2e1a" stroke-width="8" fill="none" stroke-linecap="round"/><circle cx="68" cy="56" r="5" fill="#5a2e1a"/></svg>
+              <h3>Millipedes</h3>
+              <p class="tiny">Slow, shy recyclers with lots of legs.</p>
+              <p class="flip-hint">Tap to flip</p>
+            </div>
+            <div class="critter-face critter-back">
+              <h3>Millipedes</h3>
+              <p class="tiny">Two to four small ones can share a larger jar if there is rotting wood and plenty of leaf litter. They usually ignore isopods. Hungry millipedes may nibble soft plants, so keep them well fed. Do not confuse them with centipedes, which are hunters.</p>
+            </div>
+          </div>
+        </button>
+        <button class="critter-card" type="button" aria-label="Beetle card, flip for details">
+          <div class="critter-inner">
+            <div class="critter-face">
+              <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#fff3cc"/><ellipse cx="44" cy="50" rx="18" ry="14" fill="#3a2a1a"/><circle cx="36" cy="40" r="6" fill="#3a2a1a"/><circle cx="52" cy="40" r="6" fill="#3a2a1a"/></svg>
+              <h3>Beetles</h3>
+              <p class="tiny">Only some kinds make safe tank-mates.</p>
+              <p class="flip-hint">Tap to flip</p>
+            </div>
+            <div class="critter-face critter-back">
+              <h3>Beetles</h3>
+              <p class="tiny">Safer choices are darkling beetles (the adult form of mealworms) or bess beetles, which eat rotting wood. Avoid hunting beetles such as ground beetles, rove beetles or ladybirds. Those can eat your isopods, springtails and worms.</p>
+            </div>
+          </div>
+        </button>
+        <button class="critter-card" type="button" aria-label="Earthworm card, flip for details">
+          <div class="critter-inner">
+            <div class="critter-face">
+              <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#ffe0ea"/><path d="M24 56c8-16 16 8 24-8s14 16 22 0" stroke="#c4456a" stroke-width="7" fill="none" stroke-linecap="round"/></svg>
+              <h3>Earthworms</h3>
+              <p class="tiny">Best in bigger, deeper set-ups.</p>
+              <p class="flip-hint">Tap to flip</p>
+            </div>
+            <div class="critter-face critter-back">
+              <h3>Earthworms</h3>
+              <p class="tiny">One or two can live in a large terrarium with deep soil. In a small jar they may churn the plants and make everything muddy. Skip worms until your world is roomy.</p>
+            </div>
+          </div>
+        </button>
+        <article class="plant">
+          <svg viewBox="0 0 88 88" aria-hidden="true"><circle cx="44" cy="44" r="40" fill="#e5f6e4"/><path d="M28 58l12-28 8 16 8-16 12 28" stroke="#2f8f4a" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Who lives together?</h3>
+          <p class="tiny">The dream team is springtails plus isopods. Add millipedes only if the jar is roomy and there is extra food. Never mix predators with the clean-up crew.</p>
+        </article>
+      </div>
+      <div class="grid grid-2" style="margin-top:16px">
+        <article class="card">
+          <h3>Safe handling</h3>
+          <p>Wash your hands before and after. Pick creatures up gently, or scoop them with a soft brush. Never squeeze. If you are unsure, just watch them in the jar — that is still brilliant exploring.</p>
+        </article>
+        <article class="card rose">
+          <h3>A careful note</h3>
+          <p>Centipedes are not millipedes. Centipedes have one pair of legs on each segment and they hunt. Leave them out of a friendly planted jar.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="care">
+      <h2><span class="badge-num">6</span> Water, light, air and food</h2>
+      <div class="grid grid-2">
+        <article class="card sky" id="water">
+          <h3>Watering and moisture</h3>
+          <p>Use a spray bottle. Rainwater or cooled boiled water is kinder than very hard tap water.</p>
+          <ul>
+            <li>A little soft condensation on the glass in the morning is perfect.</li>
+            <li>If the glass is always dripping and the soil looks soggy, it is too wet. Take the lid off for a while.</li>
+            <li>If there is no mist and the soil is pale and dry, give a light spray and close the lid.</li>
+            <li>The soil should feel like a wrung-out sponge, not a swamp.</li>
+          </ul>
+        </article>
+        <article class="card sun" id="light">
+          <h3>Light</h3>
+          <p>Give the jar bright, indirect light. Near a window is good, but not in the sunbeams.</p>
+          <p>Direct sun can turn a closed jar into a tiny oven and harm plants and animals. If the room is dim, a small LED grow light for about 10 to 12 hours a day works well. Ask a grown-up to help set that up.</p>
+        </article>
+        <article class="card grape" id="air">
+          <h3>Ventilation</h3>
+          <p>Even a closed terrarium likes a breath of fresh air. Open the lid for 10 to 30 minutes, a few times a week.</p>
+          <p>This keeps the air from going stale and helps stop extra mould. If you ever smell a sour, rotten-egg smell, open the lid straight away and check for soggy soil or leftover food.</p>
+        </article>
+        <article class="card clay" id="food">
+          <h3>Feeding</h3>
+          <p>The main food is leaf litter. Top it up when the old leaves disappear.</p>
+          <ul>
+            <li>Tiny pieces of cucumber or carrot make a treat.</li>
+            <li>A flake of fish food or a pinch of dried protein once in a while is enough.</li>
+            <li>Put food on a leaf or bottle cap, not buried in the soil.</li>
+            <li>Take leftover or mouldy food out after a day or two.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="problems">
+      <h2><span class="badge-num">7</span> Common problems and fixes</h2>
+      <p>Do not panic if something looks odd. Terrariums tell you what they need, if you look closely.</p>
+      <div class="grid grid-2">
+        <article class="card rose"><h3>Mould</h3><p>White fluff often means the jar is too wet, too still, or has leftover food. Remove the mouldy bit, open the lid, ease off the spraying, and let springtails get to work.</p></article>
+        <article class="card sky"><h3>Overwatering</h3><p>Soggy soil and constant drips are the clues. Leave the lid off, and you can gently press a paper towel onto puddles. Next time, mist less.</p></article>
+        <article class="card sun"><h3>Too dry</h3><p>Moss turns crispy and fittonia may flop. Mist the sides and soil, then close the lid so the moisture can cycle.</p></article>
+        <article class="card clay"><h3>Pests</h3><p>Fungus gnats like wet soil — let the top dry a little. Tiny pale mites often arrive after too much food; feed less and they usually fade. Ask a grown-up before using any spray.</p></article>
+        <article class="card"><h3>Plants dying</h3><p>Yellow, mushy leaves often mean rot from too much water. Pale, stretching plants may need more light, but still not direct sun. Take out dead leaves so they do not rot in the jar.</p></article>
+        <article class="card grape"><h3>Bad smells</h3><p>A fresh woodland smell is fine. A sour or rotten smell is not. Open the jar, remove rotting food or leaves, and let it dry a little. If it still stinks, the soil may need rebuilding with a grown-up's help.</p></article>
+      </div>
+    </section>
+
+    <section id="checklist">
+      <h2><span class="badge-num">8</span> Weekly checklist</h2>
+      <p>Tick these off once a week. Your ticks are saved on this computer, so you can come back and finish later.</p>
+      <div class="check-list" id="checkList"></div>
+      <div class="check-actions">
+        <div class="progress" aria-hidden="true"><span id="checkBar"></span></div>
+        <span id="checkScore">0 of 8 done</span>
+        <button class="btn btn-ghost" type="button" id="resetChecks">Reset ticks</button>
+      </div>
+    </section>
+
+    <section id="quiz">
+      <h2><span class="badge-num">9</span> Terrarium Explorer quiz</h2>
+      <p>Answer the questions to earn badges. Your badges stay saved on this computer.</p>
+      <div class="quiz-card">
+        <p id="quizQ" style="font-weight:800;font-size:1.15rem;margin:0"></p>
+        <div class="choices" id="quizChoices"></div>
+        <p id="quizFeedback" class="tiny" style="margin-top:12px;font-weight:800"></p>
+        <div class="quiz-nav">
+          <button class="btn btn-primary" type="button" id="quizNext" hidden>Next question</button>
+          <button class="btn btn-ghost" type="button" id="quizRestart" hidden>Try again</button>
+        </div>
+      </div>
+      <h3 style="margin-top:22px">Your badges</h3>
+      <div class="badges" id="badgeRow"></div>
+    </section>
+
+    <section id="safety">
+      <h2><span class="badge-num">10</span> Safety first</h2>
+      <div class="grid grid-2">
+        <article class="card rose">
+          <h3>Please remember</h3>
+          <ul>
+            <li>Ask a grown-up before you start, and when you move glass or use tools.</li>
+            <li>Wash your hands before and after you work in the jar.</li>
+            <li>Do not take creatures from nature reserves or other protected places.</li>
+            <li>If you borrowed local woodlice, put them back where you found them if you stop keeping them.</li>
+            <li>Do not release shop-bought or non-native animals into the wild.</li>
+          </ul>
+        </article>
+        <article class="card sun">
+          <h3>You have got this</h3>
+          <p>Look after the jar a little each week, and it will look after itself in between. Watch closely, change one thing at a time, and enjoy your tiny jungle.</p>
+          <p>Made for Timothy Farlow, with help from a grown-up at Cedar Design.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Timothy's Tiny Jungle — a local guide to open on your computer. Nothing here is published online.</p>
+  </footer>
+
+  <script>
+    (function () {
+      var navToggle = document.getElementById("navToggle");
+      var topbar = document.getElementById("topbar");
+      navToggle.addEventListener("click", function () {
+        var open = topbar.classList.toggle("open");
+        navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        navToggle.textContent = open ? "Close" : "Menu";
+      });
+      document.querySelectorAll("#site-nav a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          topbar.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+          navToggle.textContent = "Menu";
+        });
+      });
+
+      document.querySelectorAll(".critter-card").forEach(function (card) {
+        card.addEventListener("click", function () {
+          card.classList.toggle("is-flipped");
+        });
+      });
+
+      var checks = [
+        "Look for soft condensation on the glass — not a soaking wet window.",
+        "Check the soil is damp like a wrung-out sponge, not a puddle.",
+        "Look at the plants. Remove any mushy or dead leaves.",
+        "Try to spot at least one critter, or a sign they have been eating leaf litter.",
+        "Take out leftover or mouldy food.",
+        "Open the lid for 10 to 30 minutes to give the jar fresh air.",
+        "Make sure the light is bright but not direct sun.",
+        "Wash your hands when you have finished."
+      ];
+      var checkKey = "timothy-tiny-jungle-checks-v1";
+      var savedChecks = [];
+      try { savedChecks = JSON.parse(localStorage.getItem(checkKey) || "[]"); } catch (e) { savedChecks = []; }
+      var list = document.getElementById("checkList");
+      checks.forEach(function (text, i) {
+        var label = document.createElement("label");
+        label.className = "check-item" + (savedChecks[i] ? " done" : "");
+        var input = document.createElement("input");
+        input.type = "checkbox";
+        input.checked = !!savedChecks[i];
+        var span = document.createElement("span");
+        span.textContent = text;
+        label.appendChild(input);
+        label.appendChild(span);
+        input.addEventListener("change", function () {
+          label.classList.toggle("done", input.checked);
+          storeChecks();
+        });
+        list.appendChild(label);
+      });
+      function storeChecks() {
+        var values = Array.prototype.map.call(list.querySelectorAll("input"), function (box) { return box.checked; });
+        try { localStorage.setItem(checkKey, JSON.stringify(values)); } catch (e) {}
+        var done = values.filter(Boolean).length;
+        document.getElementById("checkScore").textContent = done + " of " + values.length + " done";
+        document.getElementById("checkBar").style.width = Math.round((done / values.length) * 100) + "%";
+      }
+      document.getElementById("resetChecks").addEventListener("click", function () {
+        list.querySelectorAll("input").forEach(function (box) {
+          box.checked = false;
+          box.parentElement.classList.remove("done");
+        });
+        storeChecks();
+      });
+      storeChecks();
+
+      var questions = [
+        { q: "Should a closed terrarium sit in direct sunlight?", options: ["Yes, plants love strong sun", "No, it can overheat like a tiny oven", "Only at night"], answer: 1 },
+        { q: "Who are the main clean-up crew?", options: ["Ground beetles and centipedes", "Isopods and springtails", "Only earthworms"], answer: 1 },
+        { q: "The glass is always dripping and the soil is soggy. What do you do?", options: ["Spray it again", "Add more leaf litter and leave the lid on", "Take the lid off for a while and stop misting"], answer: 2 },
+        { q: "How can you tell a millipede from a centipede?", options: ["Millipedes have two pairs of legs on most body segments and eat decaying plants. Centipedes hunt.", "They are exactly the same", "Centipedes are always bright green"], answer: 0 },
+        { q: "What should you do after handling creatures or soil?", options: ["Wash your hands", "Nothing, it is only soil", "Feed them chocolate"], answer: 0 },
+        { q: "Is it okay to take animals from a nature reserve?", options: ["Yes, if you are quick", "No, leave protected places alone", "Only on Sundays"], answer: 1 },
+        { q: "What sort of light does the jar like best?", options: ["Bright, indirect light", "A dark cupboard", "Full midday sun on the windowsill"], answer: 0 },
+        { q: "A piece of cucumber has gone mouldy. What next?", options: ["Leave it, mould is healthy", "Take it out of the jar", "Add more cucumber on top"], answer: 1 }
+      ];
+      var badgeList = [
+        { id: "explorer", name: "Explorer", icon: "compass" },
+        { id: "plant", name: "Plant Pal", icon: "leaf" },
+        { id: "critter", name: "Critter Keeper", icon: "bug" },
+        { id: "moisture", name: "Moisture Master", icon: "drop" },
+        { id: "safety", name: "Safety Star", icon: "star" }
+      ];
+      var badgeKey = "timothy-tiny-jungle-badges-v1";
+      var earned = {};
+      try { earned = JSON.parse(localStorage.getItem(badgeKey) || "{}"); } catch (e) { earned = {}; }
+
+      var quizIndex = 0;
+      var quizScore = 0;
+      var locked = false;
+      var quizQ = document.getElementById("quizQ");
+      var quizChoices = document.getElementById("quizChoices");
+      var quizFeedback = document.getElementById("quizFeedback");
+      var quizNext = document.getElementById("quizNext");
+      var quizRestart = document.getElementById("quizRestart");
+
+      function renderBadges() {
+        var row = document.getElementById("badgeRow");
+        row.innerHTML = "";
+        badgeList.forEach(function (badge) {
+          var el = document.createElement("div");
+          el.className = "award" + (earned[badge.id] ? " earned" : "");
+          el.innerHTML = '<div class="icon" aria-hidden="true">' + badgeEmoji(badge.icon) + "</div><strong>" + badge.name + "</strong>";
+          row.appendChild(el);
+        });
+      }
+      function badgeEmoji(name) {
+        if (name === "compass") return "🧭";
+        if (name === "leaf") return "🌿";
+        if (name === "bug") return "🪲";
+        if (name === "drop") return "💧";
+        return "⭐";
+      }
+      function saveBadges() {
+        try { localStorage.setItem(badgeKey, JSON.stringify(earned)); } catch (e) {}
+        renderBadges();
+      }
+      function grantFromScore() {
+        earned.explorer = true;
+        if (quizScore >= 3) earned.plant = true;
+        if (quizScore >= 5) earned.critter = true;
+        if (quizScore >= 6) earned.moisture = true;
+        if (quizScore >= 7) earned.safety = true;
+        saveBadges();
+      }
+      function showQuestion() {
+        locked = false;
+        quizNext.hidden = true;
+        quizRestart.hidden = true;
+        quizFeedback.textContent = "";
+        var item = questions[quizIndex];
+        quizQ.textContent = "Question " + (quizIndex + 1) + " of " + questions.length + " — " + item.q;
+        quizChoices.innerHTML = "";
+        item.options.forEach(function (opt, i) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.textContent = opt;
+          btn.addEventListener("click", function () { pick(i, btn); });
+          quizChoices.appendChild(btn);
+        });
+      }
+      function pick(i, btn) {
+        if (locked) return;
+        locked = true;
+        var item = questions[quizIndex];
+        var buttons = quizChoices.querySelectorAll("button");
+        buttons.forEach(function (b, idx) {
+          b.disabled = true;
+          if (idx === item.answer) b.classList.add("correct");
+        });
+        if (i === item.answer) {
+          btn.classList.add("correct");
+          quizScore += 1;
+          quizFeedback.textContent = "Yes! Well spotted.";
+        } else {
+          btn.classList.add("wrong");
+          quizFeedback.textContent = "Not quite. The highlighted answer is the one to remember.";
+        }
+        if (quizIndex < questions.length - 1) {
+          quizNext.hidden = false;
+        } else {
+          grantFromScore();
+          quizFeedback.textContent += " You scored " + quizScore + " out of " + questions.length + ".";
+          quizRestart.hidden = false;
+        }
+      }
+      quizNext.addEventListener("click", function () {
+        quizIndex += 1;
+        showQuestion();
+      });
+      quizRestart.addEventListener("click", function () {
+        quizIndex = 0;
+        quizScore = 0;
+        showQuestion();
+      });
+      renderBadges();
+      showQuestion();
+    })();
+  </script>
+</body>
+</html>
